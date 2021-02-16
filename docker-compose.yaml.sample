@@ -1,0 +1,34 @@
+version: "3"
+services:
+  npm-app:
+    image: 'jc21/nginx-proxy-manager:latest'
+    container_name: reverse-proxy-app
+    restart: always
+    ports:
+      - 80:80
+      - 443:443
+      - 81:81
+    environment:
+      DB_MYSQL_HOST: "npm-db"
+      DB_MYSQL_PORT: 3306
+      DB_MYSQL_USER: "npm"
+      DB_MYSQL_PASSWORD: "passwd"
+      DB_MYSQL_NAME: "npm"
+      DISABLE_IPV6: "true"
+    volumes:
+      - instdir/npm-reverse-proxy/data:/data
+      - instdir/npm-reverse-proxy/letsencrypt:/etc/letsencrypt
+    depends_on:
+      - npm-db
+
+  npm-db:
+    image: jc21/mariadb-aria:latest
+    container_name: reverse-proxy-db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: 'rootpasswd'
+      MYSQL_DATABASE: 'npm'
+      MYSQL_USER: 'npm'
+      MYSQL_PASSWORD: 'passwd'
+    volumes:
+      - instdir/npm-reverse-proxy/data/mysql:/var/lib/mysql
