@@ -1,5 +1,6 @@
 #!/bin/bash
 
+
 function init ()
 {
   #SET DATABASE PASSWORD
