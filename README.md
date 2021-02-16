@@ -42,6 +42,6 @@ There are lot's of ways to support me! I would be so happy if you gave this repo
 
 
 
-<a href="https://paypal.me/MrServers"><img width="185" src="https://yourdonation.rocks/images/badge.svg" alt="Donations Badge"></a>
+<a href="https://paypal.me/MrServers"><img width="185" src="https://github.com/k4m4/donations/raw/master/images/badge.svg" alt="Donations Badge"></a>
 
 
