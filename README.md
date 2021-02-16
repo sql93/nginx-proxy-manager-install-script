@@ -3,10 +3,14 @@ Based on https://github.com/jc21/nginx-proxy-manager
 
 This script, install docker, docker-compose and its dependencies , deploy npm and mariadb containers.
 
+## Minimal Requirements
+
+Operating System: Ubuntu 18.04 and higher
+
 ## Usage
 
 - You need to have docker-compose installed, script will ask you to install it if not already.
-- Set execution right to deploy.sh
+- Set execution right to install.sh
 - While script execution, prompt passwords and installation path when required (take care to remember them !)
 
 ## How it working ?
