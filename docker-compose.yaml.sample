@@ -20,7 +20,7 @@ services:
       - instdir/npm-reverse-proxy/letsencrypt:/etc/letsencrypt
     depends_on:
       - npm-db
-
+      
   npm-db:
     image: jc21/mariadb-aria:latest
     container_name: reverse-proxy-db
