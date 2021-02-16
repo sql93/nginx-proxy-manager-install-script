@@ -40,5 +40,8 @@ docker-compose up -d
 ## How can I support you?
 There are lot's of ways to support me! I would be so happy if you gave this repository a star, tweeted about it or told your friends about this little corner of the Internet ❤️
 
-[![Donations Badge](https://yourdonation.rocks/images/badge.svg)]({https://paypal.me/MrServers})
+
+
+<a href="https://paypal.me/MrServers"><img width="185" src="https://yourdonation.rocks/images/badge.svg" alt="Donations Badge"></a>
+
 
