@@ -1,47 +1,78 @@
-# nginx-proxy-manager_install_script
-Based on https://github.com/jc21/nginx-proxy-manager
+# Nginx Proxy Manager Installer
 
-This script, install docker, docker-compose and its dependencies , deploy npm and mariadb containers.
+A maintained Ubuntu installer for [Nginx Proxy Manager](https://github.com/NginxProxyManager/nginx-proxy-manager). It installs Docker Engine with the Docker Compose v2 plugin when needed, creates a persistent deployment directory, and starts Nginx Proxy Manager with MariaDB.
 
-## Minimal Requirements
+Maintained by **Mr.Server | HOSSAM ALZYOD | i@hossam.net**.
 
-Operating System: Ubuntu 18.04 and higher
+## Requirements
 
-## Usage
+- A Linux server with Bash and root access (`sudo`)
+- Docker Engine with either Docker Compose v2 (`docker compose`) or legacy Compose (`docker-compose`)
+- Ubuntu with `apt-get` only when the script needs to install Docker or the Compose v2 plugin
+- Internet access for Docker package and image downloads
 
-- You need to have docker-compose installed, script will ask you to install it if not already.
-- Set execution right to install.sh
-- While script execution, prompt passwords and installation path when required (take care to remember them !)
+The installer detects a running Docker Engine and uses it without reinstalling Docker. It checks the selected host ports before deployment.
 
-## How it working ?
+## Install
 
-- Retrieve passwords and installation path prompted by user
-
-- Update and upgrade packages if user want it
-
-- Check if docker-compose is installed (with pip3)
-  - If not installed, install dependencies for common docker and docker-compose installation (python3 / python3-pip)
-  - Install docker and docker-compose with official [script](https://docs.docker.com/engine/install/ubuntu/#install-using-the-convenience-script)
-  
-- Copy the docker-compose sample file to an production file and set your variables on it before deploy containers.
-
-- Script will create somes directories for NPM application and database in **__$YOUR_INSTALLATION_PATH/npm-reverse-proxy__**
-
-- Move docker-compose production file to **__$YOUR_INSTALLATION_PATH/npm-reverse-proxy__** (you will need it to for upgrading)
-
-## Upgrade
-
-- Do below command in **__$YOUR_INSTALLATION_PATH/npm-reverse-proxy__**
-```
-docker-compose pull
-docker-compose up -d
+```bash
+git clone https://github.com/MrServers/nginx-proxy-manager-install-script.git
+cd nginx-proxy-manager-install-script
+sudo bash install.sh
 ```
 
-## How can I support you?
-There are lot's of ways to support me! I would be so happy if you gave this repository a star, tweeted about it or told your friends about this little corner of the Internet ❤️
+The script can update system packages, installs Docker Engine and Docker Compose v2 when they are unavailable, and asks for:
 
+- MariaDB root password
+- Nginx Proxy Manager database password
+- Deployment directory (defaults to `/opt/npm-reverse-proxy`)
+- HTTP, HTTPS, and Admin UI host ports
 
+Passwords are stored in a protected `.env` file in the deployment directory. Keep this file private and include it in your backups.
 
-<a href="https://paypal.me/MrServers"><img width="185" src="https://github.com/k4m4/donations/raw/master/images/badge.svg" alt="Donations Badge"></a>
+After deployment, open `http://YOUR_SERVER_IP:ADMIN_PORT` and sign in with:
+
+```text
+Email:    admin@example.com
+Password: changeme
+```
+
+Change the default administrator credentials immediately.
+
+## Hosting Panels And Existing Web Servers
+
+This installer can run on servers with cPanel, CyberPanel, Plesk, Webmin, Apache, Nginx, OpenLiteSpeed, or another Docker deployment. It does not stop, reconfigure, or replace existing web services.
+
+Those services normally already use ports `80` and `443`. When the installer reports that a port is occupied, choose unused alternatives such as `8080` for HTTP, `8443` for HTTPS, and `8181` for the Admin UI. Nginx Proxy Manager will then be reachable on those chosen ports.
+
+Nginx Proxy Manager cannot serve standard HTTP/HTTPS traffic on ports `80` and `443` while a hosting panel or web server owns those ports. To use it as the public reverse proxy, move the existing web service to different ports or configure the existing web server to forward selected domains to the Nginx Proxy Manager ports. Do not expose two services on the same host port.
+
+## Manage And Upgrade
+
+The generated `compose.yaml` and `.env` remain in the deployment directory. To upgrade Nginx Proxy Manager later:
+
+```bash
+cd /opt/npm-reverse-proxy
+sudo docker compose pull
+sudo docker compose up -d
+```
+
+Useful commands:
+
+```bash
+sudo docker compose ps
+sudo docker compose logs -f
+sudo docker compose down
+```
+
+## Backup
+
+Back up the full deployment directory before upgrades or server changes. It contains the Nginx Proxy Manager data, Let's Encrypt certificates, MariaDB data, Compose configuration, and protected environment file.
+
+## Support
+
+Created and maintained by **Mr.Server | HOSSAM ALZYOD | i@hossam.net**.
+
+<a href="https://buymeacoffee.com/mrserver">Support Mr.Server on Buy Me a Coffee</a>
 
 
