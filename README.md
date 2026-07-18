@@ -16,7 +16,7 @@ The installer detects a running Docker Engine and uses it without reinstalling D
 ## Install
 
 ```bash
-git clone https://github.com/MrServers/nginx-proxy-manager-install-script.git
+git clone https://github.com/sql93/nginx-proxy-manager-install-script.git
 cd nginx-proxy-manager-install-script
 sudo bash install.sh
 ```
